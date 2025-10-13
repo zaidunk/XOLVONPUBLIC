@@ -13,6 +13,7 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
 import React from 'react';
+import Navigation from '@/components/navigation';
 
 export const metadata = {
   title: 'Xolvon - Landing',
@@ -23,6 +24,7 @@ export default function LandingLayout({ children }: { children: React.ReactNode 
   return (
     <html lang="id">
       <body className="antialiased">
+        <Navigation />
         {children}
       </body>
     </html>
