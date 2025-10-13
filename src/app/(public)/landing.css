@@ -1,0 +1,135 @@
+/* app/landingpage/globals.css
+   Global styles for landingpage route.
+   - main-bg: page background (deep black / deep-blue gradients)
+   - bg-pembeda: "background pembeda" used to separate sections
+   - bg-team: gradient for team section
+   - card-style: copied from earlier inline usage in page.tsx
+   - animation helpers: anim-fade-up / anim-inview
+   - story letter styles: per-letter highlight classes
+   - swiper & carousel helpers: pagination position, avatar sizing, etc.
+*/
+
+/* Tailwind directives (assumes Tailwind configured in project root) */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ---------- CSS Variables (brand colors) ---------- */
+:root{
+  --main-bg-1: #000000;
+  --main-bg-2: #041028;
+  --accent-purple: #8b5cf6;
+  --accent-blue: #3b82f6;
+  --amber: #f59e0b;
+  --muted: #64748b;
+}
+
+/* ---------- Main canvas background (deep black/deep-blue with subtle radial gradients) ---------- */
+.main-bg {
+  color: #fff;
+  min-height: 100%;
+  background:
+    radial-gradient(600px 300px at 15% 20%, rgba(59,130,246,0.06), transparent),
+    radial-gradient(500px 260px at 85% 60%, rgba(139,92,246,0.04), transparent),
+    linear-gradient(180deg, var(--main-bg-1) 0%, var(--main-bg-2) 100%);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+
+/* ---------- Background pembeda (darker card feel but contrasted with main) ---------- */
+.bg-pembeda {
+  background: linear-gradient(180deg, rgba(8,10,18,0.65), rgba(12,14,22,0.60));
+  border-top: 1px solid rgba(255,255,255,0.02);
+  border-bottom: 1px solid rgba(255,255,255,0.01);
+}
+
+/* ---------- Team gradient background (lighter than main) ---------- */
+.bg-team {
+  background: linear-gradient(140deg, rgba(11,12,20,0.72), rgba(59,130,246,0.06) 40%, rgba(139,92,246,0.04) 100%);
+}
+
+/* ---------- Card style utilities & legacy names used in page.tsx ---------- */
+.card {
+  background: rgba(12,14,20,0.54);
+  border: 1px solid rgba(255,255,255,0.03);
+  border-radius: 1rem;
+  padding: 1rem;
+}
+.card-style {
+  background: rgba(11,12,13,0.7);
+  border: 1px solid rgba(23,23,23,0.8);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+.card-style:hover { transform: translateY(-4px); box-shadow: 0 8px 30px rgba(0,0,0,0.45); }
+
+/* ---------- Story per-letter highlight helpers ---------- */
+.story-letters .letter,
+.story-letters span {
+  display:inline-block;
+  transition: transform .18s cubic-bezier(.2,.9,.2,1), color .18s, opacity .18s, font-weight .18s;
+  transform-origin: center bottom;
+  opacity: 0.92;
+  will-change: transform, color, opacity;
+}
+.story-letters .letter.highlight,
+.story-letters span.highlight {
+  color: var(--amber);
+  font-weight: 700;
+  transform: translateY(-4px) scale(1.03);
+  opacity: 1;
+}
+
+/* ---------- Accessibility helper ---------- */
+.sr-only {
+  position: absolute !important;
+  height: 1px; width: 1px;
+  overflow: hidden;
+  clip: rect(1px, 1px, 1px, 1px);
+  white-space: nowrap;
+}
+
+/* ---------- Animations (fade-up entrance) ---------- */
+/* anim-fade-up used on elements that should enter while scrolling */
+.anim-fade-up { opacity: 0; transform: translateY(18px); transition: opacity 560ms cubic-bezier(.2,.9,.2,1), transform 560ms cubic-bezier(.2,.9,.2,1); will-change: transform, opacity; }
+.anim-inview { opacity: 1; transform: translateY(0); }
+
+/* ---------- Team/Swiper helpers (taken from teamStyles) ---------- */
+.swiper-button-next, .swiper-button-prev { color: rgb(190,190,190); }
+.swiper-pagination-bullet-active { background-color: #A855F7 !important; transform: scale(1.05); }
+.swiper-pagination-bullet { background-color: #71717a; opacity:1; width:10px; height:10px; border-radius:999px; }
+.swiper-slide { display:flex; align-items:stretch; }
+
+/* wrapper space to allow bullets below cards */
+.team-wrapper { position: relative; padding-bottom: 6rem; }
+
+/* card adjustments - more transparent by default */
+.team-card {
+  padding-bottom: 1.25rem;
+  min-height: 260px;
+  transform: scale(1);
+  transition: transform 260ms cubic-bezier(.2,.9,.2,1), box-shadow 260ms;
+  background-color: rgba(24,24,27,0.08);
+  border: 1px solid rgba(148,163,184,0.06);
+}
+
+/* image avatar helpers */
+.team-avatar { width: 130px; height: 130px; border-radius: 9999px; overflow: hidden; display:inline-block; margin: 0 auto; }
+.team-avatar img { width: 100%; height: 100%; object-fit: cover; display:block; border-radius:9999px; }
+
+/* active slide zoom */
+.swiper-slide-active .team-card { transform: scale(1.06); box-shadow: 0 8px 30px rgba(0,0,0,0.45); background-color: rgba(24,24,27,0.12); }
+
+/* ensure pagination sits visually below cards */
+.swiper-pagination { position: absolute; left: 0; right: 0; bottom: 0; display:flex; justify-content:center; gap:8px; z-index:10; }
+
+/* ---------- Carousel helper (scroll-snap fallback - optional) ---------- */
+.carousel { scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; }
+.carousel-track { display:flex; gap:1rem; overflow-x:auto; padding-bottom:12px; }
+.carousel-item { scroll-snap-align:center; flex:0 0 calc(100%/1 - 2rem); }
+@media (min-width:640px){ .carousel-item { flex:0 0 calc(50% - 2rem); } }
+@media (min-width:1024px){ .carousel-item { flex:0 0 calc(33.333% - 2rem); } }
+
+/* ---------- Utility: make sure anchors and text inherit nicely ---------- */
+a { color: inherit; text-decoration: none; }
