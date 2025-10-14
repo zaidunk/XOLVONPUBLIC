@@ -1,0 +1,35 @@
+/* --- Styles specific to Attention Boost Page --- */
+.fade-in-up {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1), transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.fade-in-up.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.sentiment-bar {
+    display: flex;
+    height: 8px;
+    width: 100px;
+    border-radius: 9999px;
+    overflow: hidden;
+    background-color: var(--border-primary);
+}
+.sentiment-positive { background-color: #22c55e; }
+.sentiment-negative { background-color: #ef4444; }
+
+.boost-tab {
+    color: var(--text-secondary);
+}
+
+.boost-tab.active {
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06);
+}
+
+html.dark .boost-tab.active {
+    box-shadow: 0 1px 3px rgba(0,0,0,0.4), 0 1px 2px rgba(0,0,0,0.2);
+}

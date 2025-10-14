@@ -1,33 +1,4 @@
 /* --- Base & Theme Variables --- */
-:root {
-    --bg-primary: #F8FAFC;
-    --bg-secondary: white;
-    --bg-tertiary: #f1f5f9;
-    --text-primary: #1E293B;
-    --text-secondary: #64748B;
-    --text-tertiary: #94a3b8;
-    --border-primary: #e2e8f0;
-    --brand-primary: #3B82F6;
-    --brand-secondary: #0284c7;
-    --bg-brand-light: #e0f2fe;
-}
-
-body.dark {
-    --bg-primary: #0f172a;
-    --bg-secondary: #1e293b;
-    --bg-tertiary: #334155;
-    --text-primary: #f1f5f9;
-    --text-secondary: #94a3b8;
-    --text-tertiary: #64748B;
-    --border-primary: #334155;
-}
-
-body {
-    font-family: 'Poppins', sans-serif;
-    background-color: var(--bg-primary);
-    color: var(--text-primary);
-    transition: background-color 0.3s ease, color 0.3s ease;
-}
 
 .gradient-text {
     background: linear-gradient(90deg, #3B82F6, #22D3EE);
@@ -109,9 +80,6 @@ body {
     transform: translateY(-4px);
     box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
 }
-body.dark .card:hover {
-    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.2), 0 4px 6px -4px rgb(0 0 0 / 0.2);
-}
 
 .card-title { font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem; }
 .card-description { font-size: 0.875rem; color: var(--text-secondary); margin-bottom: 1rem; }
@@ -177,7 +145,6 @@ body.dark .card:hover {
     transition: all 0.3s ease;
     cursor: pointer;
 }
-body.dark .dot { background-color: #475569; }
 
 .dot.active {
     background-color: var(--brand-primary);
@@ -281,40 +248,9 @@ body.dark .dot { background-color: #475569; }
     pointer-events: none;
     position: absolute;
 }
-body.dark .chart-tooltip {
-    background: rgba(30, 41, 59, 0.75);
-}
 
 .chart-tooltip .tooltip-title {
     color: var(--text-primary);
     font-weight: 600;
     margin-bottom: 4px;
-}
-
-/* --- Theme Toggle Button --- */
-.theme-toggle-button {
-    position: fixed;
-    bottom: 1.5rem;
-    right: 1.5rem;
-    width: 3rem;
-    height: 3rem;
-    border-radius: 50%;
-    background-color: var(--bg-secondary);
-    border: 1px solid var(--border-primary);
-    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    z-index: 100;
-    overflow: hidden;
-}
-#theme-toggle-light-icon {
-    display: none;
-}
-body.dark #theme-toggle-dark-icon {
-    display: none;
-}
-body.dark #theme-toggle-light-icon {
-    display: block;
 }

@@ -33,6 +33,12 @@
       "static/css/app/(public)/page.css",
       "static/chunks/app/(public)/page.js"
     ],
+    "/customer/layout": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/customer/layout.css",
+      "static/chunks/app/customer/layout.js"
+    ],
     "/customer/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
@@ -44,11 +50,51 @@
       "static/chunks/main-app.js",
       "static/chunks/app/_not-found/page.js"
     ],
-    "/customer/layout": [
+    "/customer/pricing/layout": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/css/app/customer/layout.css",
-      "static/chunks/app/customer/layout.js"
+      "static/chunks/app/customer/pricing/layout.js"
+    ],
+    "/customer/pricing/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/customer/pricing/page.css",
+      "static/chunks/app/customer/pricing/page.js"
+    ],
+    "/customer/attention-boost/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/customer/attention-boost/page.css",
+      "static/chunks/app/customer/attention-boost/page.js"
+    ],
+    "/customer/cyberdefense/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/customer/cyberdefense/page.css",
+      "static/chunks/app/customer/cyberdefense/page.js"
+    ],
+    "/customer/attention-alert/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/customer/attention-alert/page.css",
+      "static/chunks/app/customer/attention-alert/page.js"
+    ],
+    "/customer/real-time-analysis/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/customer/real-time-analysis/page.css",
+      "static/chunks/app/customer/real-time-analysis/page.js"
+    ],
+    "/customer/help/layout": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/customer/help/layout.js"
+    ],
+    "/customer/help/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/customer/help/page.css",
+      "static/chunks/app/customer/help/page.js"
     ]
   }
 }
