@@ -1,9 +1,1 @@
-{
-  "/customer/attention-alert/page": "app/customer/attention-alert/page.js",
-  "/customer/attention-boost/page": "app/customer/attention-boost/page.js",
-  "/customer/page": "app/customer/page.js",
-  "/customer/cyberdefense/page": "app/customer/cyberdefense/page.js",
-  "/customer/real-time-analysis/page": "app/customer/real-time-analysis/page.js",
-  "/customer/help/page": "app/customer/help/page.js",
-  "/customer/pricing/page": "app/customer/pricing/page.js"
-}
+{}
