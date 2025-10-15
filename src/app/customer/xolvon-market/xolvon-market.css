@@ -1,0 +1,22 @@
+.data-card-image {
+    transition: transform 0.3s ease-in-out;
+}
+
+.data-card-image:hover {
+    transform: scale(1.05);
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in-up {
+    animation: fadeInUp 0.5s ease-out forwards;
+}

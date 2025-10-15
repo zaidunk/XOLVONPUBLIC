@@ -1,0 +1,96 @@
+/*!**************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[14].oneOf[10].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[14].oneOf[10].use[3]!./src/app/customer/community/community.css ***!
+  \**************************************************************************************************************************************************************************************************************************************************************************************/
+.social-media-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.social-media-card {
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-primary);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  text-align: left;
+  text-decoration: none;
+  color: var(--text-primary);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), 
+              box-shadow 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
+              border-color 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.6s forwards;
+}
+
+.social-media-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--brand-primary);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.card-icon {
+  color: var(--brand-primary);
+  margin-bottom: 1rem;
+}
+
+.card-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.card-description {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  min-height: 2.5rem; /* Ensures alignment */
+}
+
+.card-arrow {
+  position: absolute;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  font-size: 1.5rem;
+  color: var(--text-secondary);
+  opacity: 0;
+  transform: translateX(-10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.social-media-card:hover .card-arrow {
+  opacity: 1;
+  transform: translateX(0);
+  color: var(--brand-primary);
+}
+
+@media (max-width: 1024px) {
+  .social-media-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .social-media-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@keyframes fadeInUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .fade-in-up {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .fade-in-up.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  

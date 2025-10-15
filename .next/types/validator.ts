@@ -63,6 +63,15 @@ type LayoutConfig<Route extends LayoutRoutes = LayoutRoutes> = {
   type __Unused = __Check
 }
 
+// Validate ../../src/app/customer/community/page.tsx
+{
+  type __IsExpected<Specific extends AppPageConfig<"/customer/community">> = Specific
+  const handler = {} as typeof import("../../src/app/customer/community/page.js")
+  type __Check = __IsExpected<typeof handler>
+  // @ts-ignore
+  type __Unused = __Check
+}
+
 // Validate ../../src/app/customer/cyberdefense/page.tsx
 {
   type __IsExpected<Specific extends AppPageConfig<"/customer/cyberdefense">> = Specific
@@ -103,6 +112,15 @@ type LayoutConfig<Route extends LayoutRoutes = LayoutRoutes> = {
 {
   type __IsExpected<Specific extends AppPageConfig<"/customer/real-time-analysis">> = Specific
   const handler = {} as typeof import("../../src/app/customer/real-time-analysis/page.js")
+  type __Check = __IsExpected<typeof handler>
+  // @ts-ignore
+  type __Unused = __Check
+}
+
+// Validate ../../src/app/customer/xolvon-market/page.tsx
+{
+  type __IsExpected<Specific extends AppPageConfig<"/customer/xolvon-market">> = Specific
+  const handler = {} as typeof import("../../src/app/customer/xolvon-market/page.js")
   type __Check = __IsExpected<typeof handler>
   // @ts-ignore
   type __Unused = __Check

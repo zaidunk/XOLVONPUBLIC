@@ -1,7 +1,17 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Keep default config minimal to avoid unrecognized experimental keys
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+        port: '',
+        pathname: '/**',
+      },
+    ],
+  },
 }
 
 module.exports = nextConfig
+
 

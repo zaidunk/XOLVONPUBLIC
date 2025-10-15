@@ -1,7 +1,8 @@
 'use client';
 
 import { useEffect } from 'react';
-import { MessageSquareQuote, Send, Smile, Frown, ShieldAlert, Bot } from 'lucide-react';
+import { MessageSquareQuote, Smile, Frown, ShieldAlert, Bot } from 'lucide-react';
+import { FaWhatsapp } from 'react-icons/fa';
 
 export default function RealTimeAnalysisClient() {
   useEffect(() => {
@@ -45,7 +46,7 @@ export default function RealTimeAnalysisClient() {
               rel="noopener noreferrer"
               className="inline-flex items-center justify-center gap-2 bg-green-500 text-white font-semibold px-8 py-3 rounded-lg hover:opacity-90 transition transform hover:scale-105 shadow-lg shadow-green-500/20"
             >
-              <Send className="w-5 h-5" />
+              <FaWhatsapp className="w-5 h-5" />
               Get Sentiment Analysis via WhatsApp
             </a>
           </div>
