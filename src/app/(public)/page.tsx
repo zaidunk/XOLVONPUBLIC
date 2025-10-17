@@ -401,9 +401,9 @@ export default function LP() {
 
                   <div className="flex flex-wrap gap-4">
                     {/* Primary CTA (Link used for demo) */}
-                    <Link href="/" aria-label="Lihat Demo Bot" className="group inline-flex items-center gap-4 px-6 py-4 rounded-full bg-gradient-to-r from-purple-600 via-indigo-600 to-blue-600 text-white font-bold text-lg shadow-lg hover:shadow-2xl transition-all anim-fade-up">
+                    <Link href="/role-select" aria-label="Lihat Demo Bot" className="group inline-flex items-center gap-4 px-6 py-4 rounded-full bg-gradient-to-r from-purple-600 via-indigo-600 to-blue-600 text-white font-bold text-lg shadow-lg hover:shadow-2xl transition-all anim-fade-up">
                       Lihat Demo Bot
-                      <span className="flex items-center gap-2 text-sm bg-white/10 px-3 py-1 rounded-full"><Home className="w-5 h-5" /><span>Home</span></span>
+                      <IconArrowRight className="w-5 h-5 inline-block ml-2" />
                     </Link>
 
                     <button type="button" aria-label="Pelajari Lebih Lanjut" className="px-6 py-4 font-bold text-white rounded-full bg-zinc-900/70 border border-zinc-800 hover:bg-zinc-800 transition-colors anim-fade-up">

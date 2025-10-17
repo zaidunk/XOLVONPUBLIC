@@ -94,9 +94,29 @@ const extensionItems = [
 
 const telebotItems = [
     {
-        id: 23,
+        id: 26,
         category: 'Telegram Bot',
         rank: 1,
+        title: 'Attention Alert',
+        price: 'Rp 750.000/mo',
+        imageUrl: 'https://images.unsplash.com/photo-1585331505473-7586f9cb0854?q=80&w=2070&auto=format&fit=crop',
+        alt: 'Attention Alert Bot',
+        linkUrl: '/customer/attention-alert'
+    },
+    {
+        id: 27,
+        category: 'Telegram Bot',
+        rank: 2,
+        title: 'Cyber Defense',
+        price: 'Rp 1.250.000/mo',
+        imageUrl: 'https://images.unsplash.com/photo-1562813733-b31f71025d54?q=80&w=2069&auto=format&fit=crop',
+        alt: 'Cyber Defense Bot',
+        linkUrl: '/customer/cyberdefense'
+    },
+    {
+        id: 23,
+        category: 'Telegram Bot',
+        rank: 3,
         title: 'Market News & Stock Alert Bot',
         price: 'Rp 500.000/mo',
         imageUrl: 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?q=80&w=2070&auto=format&fit=crop',
@@ -105,7 +125,7 @@ const telebotItems = [
     {
         id: 24,
         category: 'Telegram Bot',
-        rank: 2,
+        rank: 4,
         title: 'Personal Finance & Budgeting Bot',
         price: 'Rp 200.000/mo',
         imageUrl: 'https://images.unsplash.com/photo-1579621970795-87facc2f976d?q=80&w=2070&auto=format&fit=crop',
@@ -114,7 +134,7 @@ const telebotItems = [
     {
         id: 25,
         category: 'Telegram Bot',
-        rank: 3,
+        rank: 5,
         title: 'Task & Reminder Automation Bot',
         price: 'Rp 180.000/mo',
         imageUrl: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=2070&auto=format&fit=crop',
@@ -139,7 +159,7 @@ const DataCard = ({ item }: { item: any }) => (
             <h2 className="data-title">{item.title}</h2>
             <div className="data-card-footer">
                 <span className="data-price">{item.price}</span>
-                <Link href={`/customer/xolvon-market/${item.id}`} className="details-button">
+                <Link href={item.linkUrl || `/customer/xolvon-market/${item.id}`} className="details-button">
                     Details
                 </Link>
             </div>
@@ -148,7 +168,7 @@ const DataCard = ({ item }: { item: any }) => (
 );
 
 export default function XolvonMarketPage() {
-    const [activeTab, setActiveTab] = useState('tools');
+    const [activeTab, setActiveTab] = useState('telebot');
     const [isClient, setIsClient] = useState(false);
 
     useEffect(() => {
@@ -174,14 +194,14 @@ export default function XolvonMarketPage() {
                         <p className="mt-1 text-lg text-slate-500">Jelajahi dan dapatkan aset digital untuk mendorong inovasi Anda.</p>
                     </div>
                     <div className="dropdown-tabs">
+                        <button onClick={() => setActiveTab('telebot')} className={getButtonClass('telebot')}>
+                            Telebot
+                        </button>
                         <button onClick={() => setActiveTab('tools')} className={getButtonClass('tools')}>
                             Tools
                         </button>
                         <button onClick={() => setActiveTab('extention')} className={getButtonClass('extention')}>
                             Extention
-                        </button>
-                        <button onClick={() => setActiveTab('telebot')} className={getButtonClass('telebot')}>
-                            Telebot
                         </button>
                     </div>
                 </div>

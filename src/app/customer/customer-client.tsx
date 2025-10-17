@@ -241,12 +241,56 @@ export default function CustomerPageClient() {
                         <h2>AI Trends</h2>
                         <a href="#" className="see-more-button">See more <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
                     </div>
-                    <div className="card chart-card">
-                        <h3 className="card-title">Social Media Engagement</h3>
-                        <p className="card-description">Topic velocity analysis across major platforms.</p>
-                        <div className="chart-container">
-                            <canvas ref={mainChartRef}></canvas>
-                            <div ref={chartTooltipRef} role="tooltip" className="chart-tooltip"></div>
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', alignItems: 'stretch' }}>
+                        <div className="card chart-card" style={{ display: 'flex', flexDirection: 'column' }}>
+                            <h3 className="card-title">Social Media Engagement</h3>
+                            <p className="card-description">Topic velocity analysis across major platforms.</p>
+                            <div className="chart-container" style={{ flex: 1 }}>
+                                <canvas ref={mainChartRef}></canvas>
+                                <div ref={chartTooltipRef} role="tooltip" className="chart-tooltip"></div>
+                            </div>
+                        </div>
+                        <div className="card" style={{ display: 'flex', flexDirection: 'column' }}>
+                            <h3 className="card-title">Engagement Snapshot</h3>
+                            <p className="card-description">Key metrics from the latest analysis.</p>
+                            <div style={{ flex: 1, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', marginTop: '20px' }}>
+                                {/* Latest Interest */}
+                                <div style={{ background: 'rgba(59, 130, 246, 0.15)', padding: '15px', borderRadius: '12px', border: '1px solid rgba(59, 130, 246, 0.4)', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px', color: '#1d4ed8' }}>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2563eb" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                                        <span>Latest</span>
+                                    </div>
+                                    <div style={{ marginTop: '8px', fontSize: '2.2rem', fontWeight: 'bold', color: '#1e3a8a' }}>90%</div>
+                                    <div style={{ fontSize: '0.8rem', color: '#1d4ed8', fontWeight: '500' }}>Current Topic Velocity</div>
+                                </div>
+                                {/* Peak Interest */}
+                                <div style={{ background: 'rgba(34, 197, 94, 0.15)', padding: '15px', borderRadius: '12px', border: '1px solid rgba(34, 197, 94, 0.4)', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px', color: '#15803d' }}>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#16a34a" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m21 16-4-4-4 4-4-4-4 4"></path><path d="M17 20h-4"></path><path d="M13 4h4"></path><path d="m3 8 4-4 4 4"></path></svg>
+                                        <span>Peak</span>
+                                    </div>
+                                    <div style={{ marginTop: '8px', fontSize: '2.2rem', fontWeight: 'bold', color: '#14532d' }}>90%</div>
+                                    <div style={{ fontSize: '0.8rem', color: '#15803d', fontWeight: '500' }}>All-Time High</div>
+                                </div>
+                                {/* Lowest Interest */}
+                                <div style={{ background: 'rgba(239, 68, 68, 0.15)', padding: '15px', borderRadius: '12px', border: '1px solid rgba(239, 68, 68, 0.4)', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px', color: '#b91c1c' }}>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#dc2626" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m3 8 4 4 4-4 4 4 4-4"></path><path d="M17 12h4"></path><path d="M13 20h-4"></path><path d="m3 16 4 4 4-4"></path></svg>
+                                        <span>Lowest</span>
+                                    </div>
+                                    <div style={{ marginTop: '8px', fontSize: '2.2rem', fontWeight: 'bold', color: '#991b1b' }}>56%</div>
+                                    <div style={{ fontSize: '0.8rem', color: '#b91c1c', fontWeight: '500' }}>All-Time Low</div>
+                                </div>
+                                {/* Average Interest */}
+                                <div style={{ background: 'rgba(148, 163, 184, 0.15)', padding: '15px', borderRadius: '12px', border: '1px solid rgba(148, 163, 184, 0.4)', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px', color: '#475569' }}>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#64748b" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect width="8" height="4" x="8" y="2" rx="1" ry="1"></rect></svg>
+                                        <span>Average</span>
+                                    </div>
+                                    <div style={{ marginTop: '8px', fontSize: '2.2rem', fontWeight: 'bold', color: '#334155' }}>72.3%</div>
+                                    <div style={{ fontSize: '0.8rem', color: '#475569', fontWeight: '500' }}>7-Day Period</div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </section>

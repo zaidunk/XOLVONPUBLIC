@@ -59,9 +59,9 @@ const Navigation = () => {
                         <span>Upcoming Projects</span>
                     </Link>
                     <div className="mt-auto">
-                        <Link href="/customer/help" className={`sidebar-link ${isActive('/customer/help') ? 'active' : ''}`}>
-                            <HelpCircle size={20} />
-                            <span>Help</span>
+                        <Link href="/customer/contact-us" className={`sidebar-link ${isActive('/customer/contact-us') ? 'active' : ''}`}>
+                            <Mail size={20} />
+                            <span>Contact Us</span>
                         </Link>
                     </div>
                 </nav>

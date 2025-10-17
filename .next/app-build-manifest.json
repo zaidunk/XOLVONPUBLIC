@@ -21,17 +21,64 @@
       "static/chunks/main-app.js",
       "static/chunks/app/not-found.js"
     ],
+    "/(public)/layout": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/(public)/layout.css",
+      "static/chunks/app/(public)/layout.js"
+    ],
+    "/(public)/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/(public)/page.css",
+      "static/chunks/app/(public)/page.js"
+    ],
     "/customer/layout": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/css/app/customer/layout.css",
       "static/chunks/app/customer/layout.js"
     ],
+    "/customer/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/customer/page.css",
+      "static/chunks/app/customer/page.js"
+    ],
+    "/customer/attention-boost/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/customer/attention-boost/page.css",
+      "static/chunks/app/customer/attention-boost/page.js"
+    ],
     "/customer/xolvon-market/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/css/app/customer/xolvon-market/page.css",
       "static/chunks/app/customer/xolvon-market/page.js"
+    ],
+    "/customer/community/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/customer/community/page.css",
+      "static/chunks/app/customer/community/page.js"
+    ],
+    "/customer/contact-us/layout": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/customer/contact-us/layout.js"
+    ],
+    "/customer/contact-us/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/customer/contact-us/page.css",
+      "static/chunks/app/customer/contact-us/page.js"
+    ],
+    "/customer/attention-alert/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/customer/attention-alert/page.css",
+      "static/chunks/app/customer/attention-alert/page.js"
     ],
     "/customer/real-time-analysis/page": [
       "static/chunks/webpack.js",
@@ -45,40 +92,16 @@
       "static/css/app/customer/cyberdefense/page.css",
       "static/chunks/app/customer/cyberdefense/page.js"
     ],
-    "/customer/attention-alert/page": [
+    "/customer/pricing/layout": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/css/app/customer/attention-alert/page.css",
-      "static/chunks/app/customer/attention-alert/page.js"
+      "static/chunks/app/customer/pricing/layout.js"
     ],
-    "/customer/attention-boost/page": [
+    "/customer/pricing/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/css/app/customer/attention-boost/page.css",
-      "static/chunks/app/customer/attention-boost/page.js"
-    ],
-    "/customer/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/css/app/customer/page.css",
-      "static/chunks/app/customer/page.js"
-    ],
-    "/customer/help/layout": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/customer/help/layout.js"
-    ],
-    "/customer/help/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/css/app/customer/help/page.css",
-      "static/chunks/app/customer/help/page.js"
-    ],
-    "/customer/community/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/css/app/customer/community/page.css",
-      "static/chunks/app/customer/community/page.js"
+      "static/css/app/customer/pricing/page.css",
+      "static/chunks/app/customer/pricing/page.js"
     ]
   }
 }

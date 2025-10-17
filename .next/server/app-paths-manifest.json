@@ -1,7 +1,9 @@
 {
+  "/customer/attention-boost/page": "app/customer/attention-boost/page.js",
   "/customer/xolvon-market/page": "app/customer/xolvon-market/page.js",
-  "/customer/real-time-analysis/page": "app/customer/real-time-analysis/page.js",
-  "/customer/page": "app/customer/page.js",
   "/customer/community/page": "app/customer/community/page.js",
-  "/customer/cyberdefense/page": "app/customer/cyberdefense/page.js"
+  "/customer/attention-alert/page": "app/customer/attention-alert/page.js",
+  "/customer/page": "app/customer/page.js",
+  "/customer/contact-us/page": "app/customer/contact-us/page.js",
+  "/customer/pricing/page": "app/customer/pricing/page.js"
 }
