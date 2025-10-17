@@ -11,3 +11,13 @@
   transform: translateY(0);
 }
 
+.realtime-analysis-button {
+  --gradient-1: #075e54;
+  --gradient-2: #128c7e;
+  --gradient-3: #25d366;
+  --gradient-4: #1ebe5b;
+  --glow-color: rgba(37, 211, 102, 0.45);
+  --hover-glow-color: rgba(18, 140, 126, 0.6);
+  --focus-outline: rgba(37, 211, 102, 0.6);
+}
+

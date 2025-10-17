@@ -5,6 +5,19 @@ import Chart from "chart.js/auto";
 import { Check, PieChart, ShieldCheck } from "lucide-react";
 import "./pricing.css";
 
+const ACHIEVABLE_RATE = 0.4;
+const MAX_MULTIPLIER = 3;
+const MIN_BUDGET = 1_000_000;
+const MAX_BUDGET = 50_000_000;
+const DEFAULT_BUDGET = 10_000_000;
+const STATIC_MAX_ATTENTION = MAX_BUDGET * ACHIEVABLE_RATE * MAX_MULTIPLIER;
+const TIMELINE_STAGES = [
+  { label: "1 Week", percentOfAchievable: 0.1 },
+  { label: "2 Week", percentOfAchievable: 0.25 },
+  { label: "1 Month", percentOfAchievable: 0.5 },
+  { label: "3 Month", percentOfAchievable: 3 },
+];
+
 const PricingPage = () => {
   const chartRef = useRef<Chart | null>(null);
   const budgetSliderRef = useRef<HTMLInputElement | null>(null);
@@ -12,28 +25,14 @@ const PricingPage = () => {
   const attentionValueElRef = useRef<HTMLParagraphElement | null>(null);
   const convRateElRef = useRef<HTMLParagraphElement | null>(null);
   const clipperValueElRef = useRef<HTMLParagraphElement | null>(null);
-  const displayConvRateElRef = useRef<HTMLParagraphElement | null>(null);
-  const displayAttNowElRef = useRef<HTMLParagraphElement | null>(null);
-  const displayAttMaxElRef = useRef<HTMLParagraphElement | null>(null);
   const attentionChartRef = useRef<HTMLCanvasElement | null>(null);
 
   useEffect(() => {
-
-    const MAX_BUDGET = 50000000,
-      ATTENTION_PER_RUPIAH = 0.3,
-      MAX_POSSIBLE_ATTENTION = MAX_BUDGET * ATTENTION_PER_RUPIAH;
-    const DESIRED_AT_1M = 0.0155,
-      MAX_CONV = 0.1,
-      K = -Math.log(1 - DESIRED_AT_1M / MAX_CONV);
-
     const budgetSlider = budgetSliderRef.current;
     const budgetValueEl = budgetValueElRef.current;
     const attentionValueEl = attentionValueElRef.current;
     const convRateEl = convRateElRef.current;
     const clipperValueEl = clipperValueElRef.current;
-    const displayConvRateEl = displayConvRateElRef.current;
-    const displayAttNowEl = displayAttNowElRef.current;
-    const displayAttMaxEl = displayAttMaxElRef.current;
     const attentionChart = attentionChartRef.current;
 
     if (
@@ -42,9 +41,6 @@ const PricingPage = () => {
       !attentionValueEl ||
       !convRateEl ||
       !clipperValueEl ||
-      !displayConvRateEl ||
-      !displayAttNowEl ||
-      !displayAttMaxEl ||
       !attentionChart
     ) {
       return;
@@ -57,84 +53,157 @@ const PricingPage = () => {
         minimumFractionDigits: 0,
       }).format(Math.round(num));
     }
-    function formatCompact(n: number) {
-      if (n >= 1000000) return (n / 1000000).toFixed(2) + "M";
-      if (n >= 1000) return (n / 1000).toFixed(1) + "K";
-      return n.toString();
+
+    function formatAttention(value: number) {
+      return new Intl.NumberFormat("id-ID").format(Math.round(value));
     }
-    function computeConversionRate(budget: number) {
-      return (
-        MAX_CONV * (1 - Math.exp(-K * Math.max(0.001, budget / 1000000)))
+
+    function formatShort(value: number, includePlus = false) {
+      const absVal = Math.abs(value);
+      let result: string;
+      if (absVal >= 1_000_000) {
+        const formatted = value / 1_000_000;
+        result = Number.isInteger(formatted)
+          ? `${formatted.toFixed(0)}M`
+          : `${formatted.toFixed(1).replace(/\.0$/, "")}M`;
+      } else if (absVal >= 1_000) {
+        const formatted = value / 1_000;
+        result = Number.isInteger(formatted)
+          ? `${formatted.toFixed(0)}K`
+          : `${formatted.toFixed(1).replace(/\.0$/, "")}K`;
+      } else {
+        result = Math.round(value).toString();
+      }
+      return includePlus ? `${result}++` : result;
+    }
+
+    function getOrCreateTooltip(chart: Chart) {
+      const parent = chart.canvas.parentNode;
+      if (!parent) return null;
+      let tooltipEl = parent.querySelector<HTMLDivElement>('.attention-tooltip');
+      if (!tooltipEl) {
+        tooltipEl = document.createElement('div');
+        tooltipEl.className = 'attention-tooltip';
+        Object.assign(tooltipEl.style, {
+          position: 'absolute',
+          pointerEvents: 'none',
+          opacity: '0',
+          transition: 'opacity 0.16s ease, transform 0.16s ease',
+          transform: 'translate(-50%, -140%) scale(0.98)',
+          willChange: 'transform, opacity',
+        });
+
+        const inner = document.createElement('div');
+        inner.className = 'attention-tooltip__inner';
+        Object.assign(inner.style, {
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '2px',
+          padding: '10px 14px',
+          borderRadius: '12px',
+          background: 'linear-gradient(145deg, rgba(15,23,42,0.92), rgba(30,64,175,0.92))',
+          color: 'white',
+          boxShadow: '0 12px 32px rgba(15, 23, 42, 0.35)',
+          backdropFilter: 'blur(10px)',
+          border: '1px solid rgba(96,165,250,0.25)',
+          fontFamily: 'inherit',
+        });
+
+        const label = document.createElement('span');
+        label.className = 'attention-tooltip__label';
+        Object.assign(label.style, {
+          fontSize: '11px',
+          textTransform: 'uppercase',
+          letterSpacing: '0.08em',
+          color: 'rgba(226,232,240,0.8)',
+        });
+
+        const value = document.createElement('strong');
+        value.className = 'attention-tooltip__value';
+        Object.assign(value.style, {
+          fontSize: '16px',
+          fontWeight: '700',
+        });
+
+        inner.appendChild(label);
+        inner.appendChild(value);
+        tooltipEl.appendChild(inner);
+        parent.appendChild(tooltipEl);
+      }
+      return tooltipEl;
+    }
+
+    function externalTooltipHandler(context: any) {
+      const { chart, tooltip } = context;
+      const tooltipEl = getOrCreateTooltip(chart);
+      if (!tooltipEl) return;
+
+      if (tooltip.opacity === 0) {
+        tooltipEl.style.opacity = '0';
+        tooltipEl.style.transform = 'translate(-50%, -130%) scale(0.94)';
+        return;
+      }
+
+      const labelEl = tooltipEl.querySelector<HTMLSpanElement>('.attention-tooltip__label');
+      const valueEl = tooltipEl.querySelector<HTMLSpanElement>('.attention-tooltip__value');
+
+      if (labelEl) {
+        labelEl.textContent = tooltip.title?.[0] ?? '';
+      }
+      if (valueEl) {
+        const datapoint = tooltip.dataPoints?.[0];
+        const val = datapoint ? datapoint.parsed.y : 0;
+        valueEl.textContent = `${formatAttention(val)} attention`;
+      }
+
+      tooltipEl.style.opacity = '1';
+      tooltipEl.style.transform = 'translate(-50%, -140%) scale(1)';
+
+      const { offsetLeft, offsetTop } = chart.canvas;
+      tooltipEl.style.left = `${offsetLeft + tooltip.caretX}px`;
+      tooltipEl.style.top = `${offsetTop + tooltip.caretY}px`;
+    }
+
+    function calculateProjection(budget: number) {
+      const achievableAttention = budget * ACHIEVABLE_RATE;
+      const maxAttention = achievableAttention * MAX_MULTIPLIER;
+      const stageAttention = TIMELINE_STAGES.map((stage) =>
+        Math.min(maxAttention, achievableAttention * stage.percentOfAchievable)
       );
-    }
-    function calculateMetrics(budget: number) {
-      const bM = Math.max(0.001, budget / 1000000);
+      const stagePercentOfMax = stageAttention.map((value) =>
+        maxAttention ? (value / maxAttention) * 100 : 0
+      );
       return {
-        attention: Math.round(budget * ATTENTION_PER_RUPIAH),
-        conversionRate: computeConversionRate(budget),
-        clipperMin: Math.round(40 * Math.pow(bM, 1.05)),
-        clipperMax: Math.round(80 * Math.pow(bM, 1.03)),
-        budgetRatio: Math.min(1, budget / MAX_BUDGET),
+        achievableAttention,
+        maxAttention,
+        stageAttention,
+        stagePercentOfMax,
       };
     }
-    function computeTrendMultipliers(budgetRatio: number) {
-      return [0.6, 1.15, 2.0, 2.6, 3.2].map(
-        (m) => m * (1 + budgetRatio * 0.25)
-      );
-    }
-    function generateChartValues(attention: number, budgetRatio: number) {
-      const multipliers = computeTrendMultipliers(budgetRatio);
-      const avgAbs = multipliers.map((m) => attention * m);
-      const deviationFactor = 0.1 * (1 - budgetRatio);
-      const minAbs = avgAbs.map((v) => v * (1 - deviationFactor));
-      const toPct = (arr: number[]) =>
-        arr.map((v) => Math.min(100, (v / MAX_POSSIBLE_ATTENTION) * 100));
-      return {
-        avgPct: toPct(avgAbs),
-        minPct: toPct(minAbs),
-        avgAbs,
-        minAbs,
-      };
-    }
+
+    let latestProjection = calculateProjection(Number(budgetSlider.value));
+
     function renderChart(initialBudget: number) {
       if (chartRef.current) chartRef.current.destroy();
       const ctx = attentionChart.getContext("2d");
       if (!ctx) return;
-      const metrics = calculateMetrics(initialBudget);
-      const proj = generateChartValues(metrics.attention, metrics.budgetRatio);
+      latestProjection = calculateProjection(initialBudget);
+
       chartRef.current = new Chart(ctx, {
         type: "line",
         data: {
-          labels: ["Sekarang", "1 Week", "2 Week", "1 Month", "3 Month"],
+          labels: TIMELINE_STAGES.map((stage) => stage.label),
           datasets: [
             {
-              label: "Guaranteed (min)",
-              data: proj.minPct,
-              borderColor: "transparent",
-              backgroundColor: "rgba(59,130,246,0.15)",
-              pointRadius: 0,
-              tension: 0.4,
-              fill: true,
-            },
-            {
-              label: "StdDev (min)",
-              data: proj.minPct,
-              borderColor: "rgba(252,211,77,0.95)",
-              borderWidth: 1,
-              borderDash: [4, 4],
-              pointRadius: 0,
-              tension: 0.4,
-              fill: false,
-            },
-            {
-              label: "Average",
-              data: proj.avgPct,
+              label: "Projected Attention",
+              data: latestProjection.stageAttention,
               borderColor: "#3B82F6",
               borderWidth: 3,
               tension: 0.4,
-              pointRadius: 0,
-              backgroundColor: "rgba(59,130,246,0.5)",
-              fill: "-2",
+              pointRadius: 4,
+              pointBackgroundColor: "#3B82F6",
+              backgroundColor: "rgba(59,130,246,0.35)",
+              fill: true,
             },
           ],
         },
@@ -144,37 +213,19 @@ const PricingPage = () => {
           plugins: {
             legend: { display: false },
             tooltip: {
-              enabled: true,
-              callbacks: {
-                title: (ctx) => ctx[0].label,
-                label: (ctx) => {
-                  const metricsNow = calculateMetrics(
-                    Number(budgetSlider.value)
-                  );
-                  const projNow = generateChartValues(
-                    metricsNow.attention,
-                    metricsNow.budgetRatio
-                  );
-                  const absVal =
-                    ctx.datasetIndex === 2
-                      ? projNow.avgAbs[ctx.dataIndex]
-                      : projNow.minAbs[ctx.dataIndex];
-                  return `${
-                    ctx.dataset.label
-                  }: ${ctx.parsed.y.toFixed(1)}% — ${formatCompact(
-                    Math.round(absVal)
-                  )} attention`;
-                },
-              },
+              enabled: false,
+              external: externalTooltipHandler,
             },
           },
           scales: {
             y: {
               beginAtZero: true,
-              max: 100,
+              max: STATIC_MAX_ATTENTION,
               ticks: {
-                stepSize: 20,
-                callback: (v) => `${v}%`,
+                callback: (value) =>
+                  formatAttention(
+                    typeof value === "string" ? Number(value) : (value as number)
+                  ),
                 color: getComputedStyle(document.body).getPropertyValue(
                   "--text-secondary"
                 ),
@@ -192,27 +243,28 @@ const PricingPage = () => {
         },
       });
     }
+
     function updateAll(budget: number) {
-      const metrics = calculateMetrics(budget);
+      latestProjection = calculateProjection(budget);
+
       budgetValueEl.textContent = formatRupiah(budget);
-      attentionValueEl.textContent = formatCompact(metrics.attention);
-      convRateEl.textContent = (metrics.conversionRate * 100).toFixed(2) + "%";
-      clipperValueEl.textContent = `${metrics.clipperMin} - ${metrics.clipperMax}`;
-      const proj = generateChartValues(metrics.attention, metrics.budgetRatio);
-      displayConvRateEl.textContent =
-        (metrics.conversionRate * 100).toFixed(2) + "%";
-      displayAttNowEl.textContent = formatCompact(Math.round(proj.avgAbs[0]));
-      displayAttMaxEl.textContent = formatCompact(Math.round(proj.avgAbs[4]));
+      attentionValueEl.textContent = formatShort(
+        latestProjection.achievableAttention,
+        true
+      );
+      convRateEl.textContent = formatShort(latestProjection.maxAttention);
+
+      const ugcMin = Math.max(
+        1,
+        Math.round(latestProjection.achievableAttention / 25_000)
+      );
+      const ugcMax = ugcMin * 2;
+      clipperValueEl.textContent = `${ugcMin} - ${ugcMax}`;
+
       if (!chartRef.current) {
         renderChart(budget);
       } else {
-        const newProj = generateChartValues(
-          metrics.attention,
-          metrics.budgetRatio
-        );
-        chartRef.current.data.datasets[0].data = newProj.minPct;
-        chartRef.current.data.datasets[1].data = newProj.minPct;
-        chartRef.current.data.datasets[2].data = newProj.avgPct;
+        chartRef.current.data.datasets[0].data = latestProjection.stageAttention;
         chartRef.current.update("none");
       }
     }
@@ -266,7 +318,7 @@ const PricingPage = () => {
             <div className="mt-10 bg-[--bg-secondary] border border-[--border-primary] rounded-2xl p-6 shadow">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
                 {/* results */}
-                <div className="space-y-4 text-left">
+                <div className="grid grid-cols-2 gap-4 md:grid-cols-1 text-left">
                   <div>
                     <label className="font-bold text-lg">
                       Budget Campaign
@@ -281,38 +333,38 @@ const PricingPage = () => {
                   </div>
                   <div>
                     <p className="text-[--text-secondary] font-semibold">
-                      Estimated Attention
+                      Achievable
                     </p>
                     <p
                       id="attention-value"
                       ref={attentionValueElRef}
                       className="text-2xl font-bold"
                     >
-                      3.00K
+                      —
                     </p>
                   </div>
                   <div>
                     <p className="text-[--text-secondary] font-semibold">
-                      Estimated Conversion Rate
+                      Max potential
                     </p>
                     <p
                       id="conv-rate"
                       ref={convRateElRef}
                       className="text-2xl font-bold"
                     >
-                      1.55%
+                      —
                     </p>
                   </div>
                   <div>
                     <p className="text-[--text-secondary] font-semibold">
-                      Clipper & UGC
+                      UGC & Clipper
                     </p>
                     <p
                       id="clipper-value"
                       ref={clipperValueElRef}
                       className="text-2xl font-bold"
                     >
-                      450 - 850
+                      —
                     </p>
                   </div>
                 </div>
@@ -322,54 +374,16 @@ const PricingPage = () => {
                     id="budget-slider"
                     ref={budgetSliderRef}
                     type="range"
-                    min="1000000"
-                    max="50000000"
-                    step="500000"
-                    defaultValue="10000000"
+                    min={MIN_BUDGET}
+                    max={MAX_BUDGET}
+                    step={500000}
+                    defaultValue={DEFAULT_BUDGET}
                   />
                   <div className="mt-4 h-56">
                     <canvas
                       id="attention-chart"
                       ref={attentionChartRef}
                     ></canvas>
-                  </div>
-                  <div className="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-3">
-                    <div className="bg-[--bg-tertiary] p-3 rounded-lg text-left">
-                      <p className="text-sm text-[--text-secondary]">
-                        Estimated Conv. Rate
-                      </p>
-                      <p
-                        id="display-conv-rate"
-                        ref={displayConvRateElRef}
-                        className="font-semibold text-lg"
-                      >
-                        1.55%
-                      </p>
-                    </div>
-                    <div className="bg-[--bg-tertiary] p-3 rounded-lg text-left">
-                      <p className="text-sm text-[--text-secondary]">
-                        Estimated Attention (Now)
-                      </p>
-                      <p
-                        id="display-att-now"
-                        ref={displayAttNowElRef}
-                        className="font-semibold text-lg"
-                      >
-                        —
-                      </p>
-                    </div>
-                    <div className="bg-[--bg-tertiary] p-3 rounded-lg text-left">
-                      <p className="text-sm text-[--text-secondary]">
-                        Max Attention (3M)
-                      </p>
-                      <p
-                        id="display-att-max"
-                        ref={displayAttMaxElRef}
-                        className="font-semibold text-lg"
-                      >
-                        —
-                      </p>
-                    </div>
                   </div>
                   <div className="mt-5">
                     <button
@@ -553,6 +567,17 @@ const PricingPage = () => {
                 </div>
               </div>
             </div>
+          </div>
+        </section>
+
+        <section className="py-16 md:py-20 fade-in-up">
+          <div className="max-w-4xl mx-auto px-6 text-center">
+            <blockquote className="text-2xl md:text-3xl font-semibold text-[--text-primary] leading-snug">
+              "Setiap campaign punya potensi mencuri perhatian. Mulai sekarang, bangun momentum bersama XOLVON."
+            </blockquote>
+            <p className="mt-4 text-[--text-secondary] max-w-2xl mx-auto">
+              Dapatkan akses ke strategi berbasis data dan ekosistem kreator yang siap mengangkat brand kamu ke level berikutnya.
+            </p>
           </div>
         </section>
 

@@ -102,6 +102,12 @@
       "static/chunks/main-app.js",
       "static/css/app/customer/pricing/page.css",
       "static/chunks/app/customer/pricing/page.js"
+    ],
+    "/customer/upcoming-projects/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/customer/upcoming-projects/page.css",
+      "static/chunks/app/customer/upcoming-projects/page.js"
     ]
   }
 }

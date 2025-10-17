@@ -44,7 +44,7 @@ export default function RealTimeAnalysisClient() {
               href="https://wa.me/"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 bg-green-500 text-white font-semibold px-8 py-3 rounded-lg hover:opacity-90 transition transform hover:scale-105 shadow-lg shadow-green-500/20"
+              className="animated-gradient-button realtime-analysis-button"
             >
               <FaWhatsapp className="w-5 h-5" />
               Get Sentiment Analysis via WhatsApp

@@ -44,7 +44,7 @@ export default function CyberDefenseClient() {
               href="https://t.me/"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 bg-[--brand-primary] text-white font-semibold px-8 py-3 rounded-lg hover:opacity-90 transition transform hover:scale-105 shadow-lg shadow-blue-500/20"
+              className="animated-gradient-button cyber-defense-button"
             >
               <Send className="w-5 h-5" />
               Activate via Telegram

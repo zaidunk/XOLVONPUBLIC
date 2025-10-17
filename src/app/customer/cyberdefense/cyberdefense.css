@@ -7,3 +7,13 @@
   opacity: 1;
   transform: translateY(0);
 }
+
+.cyber-defense-button {
+  --gradient-1: #0ea5e9;
+  --gradient-2: #2563eb;
+  --gradient-3: #22d3ee;
+  --gradient-4: #0284c7;
+  --glow-color: rgba(14, 165, 233, 0.52);
+  --hover-glow-color: rgba(37, 99, 235, 0.62);
+  --focus-outline: rgba(14, 165, 233, 0.6);
+}

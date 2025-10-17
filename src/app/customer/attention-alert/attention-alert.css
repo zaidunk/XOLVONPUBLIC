@@ -1,0 +1,9 @@
+.trend-alert-button {
+	--gradient-1: #229ed9;
+	--gradient-2: #2aabee;
+	--gradient-3: #39b7f6;
+	--gradient-4: #1f9dd6;
+	--glow-color: rgba(34, 158, 217, 0.55);
+	--hover-glow-color: rgba(34, 158, 217, 0.68);
+	--focus-outline: rgba(34, 158, 217, 0.6);
+}

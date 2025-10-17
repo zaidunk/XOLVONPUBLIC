@@ -54,7 +54,7 @@ const Navigation = () => {
                         <Users size={20} />
                         <span>Community</span>
                     </Link>
-                    <Link href="#" className="sidebar-link">
+                    <Link href="/customer/upcoming-projects" className={`sidebar-link ${isActive('/customer/upcoming-projects') ? 'active' : ''}`}>
                         <FolderClock size={20} />
                         <span>Upcoming Projects</span>
                     </Link>

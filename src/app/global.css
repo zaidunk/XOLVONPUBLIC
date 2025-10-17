@@ -36,3 +36,67 @@ a {
   opacity: 1;
   transform: translateY(0);
 }
+
+/* Animated CTA gradient button */
+.animated-gradient-button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 2rem;
+  border-radius: 0.75rem;
+  background: linear-gradient(
+    120deg,
+    var(--gradient-1, #0ea5e9),
+    var(--gradient-2, #9333ea),
+    var(--gradient-3, #f97316),
+    var(--gradient-4, #0ea5e9)
+  );
+  background-size: 300% 300%;
+  color: #ffffff;
+  font-weight: 600;
+  box-shadow: 0 18px 40px -18px var(--glow-color, rgba(14, 165, 233, 0.65));
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+  overflow: hidden;
+  isolation: isolate;
+  animation: trend-gradient-shift 7s ease infinite;
+}
+
+.animated-gradient-button::before {
+  content: '';
+  position: absolute;
+  inset: -40%;
+  background: radial-gradient(rgba(255, 255, 255, 0.35), transparent 60%);
+  transform: scale(0.6);
+  opacity: 0;
+  transition: transform 0.4s ease, opacity 0.4s ease;
+  z-index: -1;
+}
+
+.animated-gradient-button:hover {
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 22px 45px -18px var(--hover-glow-color, rgba(147, 51, 234, 0.7));
+}
+
+.animated-gradient-button:hover::before {
+  transform: scale(1);
+  opacity: 1;
+}
+
+.animated-gradient-button:focus-visible {
+  outline: 3px solid var(--focus-outline, rgba(14, 165, 233, 0.5));
+  outline-offset: 3px;
+}
+
+@keyframes trend-gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
